@@ -64,17 +64,17 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
 	button.addEventListener('click', () => {
 		const productId = button.dataset.productId;
 
-		// Undefined variable
+		// UNDEFINED VARIABLE
 		let matchingItem;
 
-		// Check if the product already exists (Loop through the cart)
+		// CHECK IF THE PRODUCT ALREADY EXISTS (Loop through the cart)
 		cart.forEach((item) => {
 			if (productId === item.productId) {
 				matchingItem = item;
 			}
 		});
 
-		// If it is in the cart, increment the quantity
+		// IF IT IS IN THE CART, INCREMENT THE QUANTITY
 		if (matchingItem) {
 			matchingItem.quantity++;
 		} else {
@@ -84,6 +84,14 @@ document.querySelectorAll('.js-add-to-cart').forEach((button) => {
 			});
 		}
 
-		console.log(cart);
+		// CALCULATE TOTAL QUANTITY
+		let cartQuantity = 0;
+		// Loop through the cart
+		cart.forEach((item) => {
+			cartQuantity += item.quantity;
+		});
+
+		// AFTER WE CALCULATE QUANTITY, WE UPDATE THE DOM.
+		document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
 	});
 });
