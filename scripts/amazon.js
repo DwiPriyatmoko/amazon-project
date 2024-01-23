@@ -1,3 +1,5 @@
+import { cart } from '../data/cart.js';
+
 let productsHTML = '';
 // 2. COMBINE THE HTML TOGETHER
 // LOOP through array
