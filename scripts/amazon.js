@@ -1,4 +1,6 @@
-import { cart } from '../data/cart.js';
+// import {variable name} from 'file path';
+import { cart, addToCart } from '../data/cart.js';
+import { products } from '../data/products.js';
 
 let productsHTML = '';
 // 2. COMBINE THE HTML TOGETHER
@@ -61,39 +63,24 @@ products.forEach((product) => {
 // 3. DISPLAY THE HTML using the DOM
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
+// FUNCTION TO UPDATE THE CART QUANTITY
+function updateCartQuantity() {
+	// CALCULATE TOTAL QUANTITY
+	let cartQuantity = 0;
+	// Loop through the cart
+	cart.forEach((cartItem) => {
+		cartQuantity += cartItem.quantity;
+	});
+	// AFTER WE CALCULATE QUANTITY, WE UPDATE THE DOM.
+	document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
+
 //4. EVENT LISTENERS
 document.querySelectorAll('.js-add-to-cart').forEach((button) => {
 	button.addEventListener('click', () => {
 		const productId = button.dataset.productId;
 
-		// UNDEFINED VARIABLE
-		let matchingItem;
-
-		// CHECK IF THE PRODUCT ALREADY EXISTS (Loop through the cart)
-		cart.forEach((item) => {
-			if (productId === item.productId) {
-				matchingItem = item;
-			}
-		});
-
-		// IF IT IS IN THE CART, INCREMENT THE QUANTITY
-		if (matchingItem) {
-			matchingItem.quantity++;
-		} else {
-			cart.push({
-				productId,
-				quantity: 1,
-			});
-		}
-
-		// CALCULATE TOTAL QUANTITY
-		let cartQuantity = 0;
-		// Loop through the cart
-		cart.forEach((item) => {
-			cartQuantity += item.quantity;
-		});
-
-		// AFTER WE CALCULATE QUANTITY, WE UPDATE THE DOM.
-		document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+		addToCart(productId);
+		updateCartQuantity();
 	});
 });
